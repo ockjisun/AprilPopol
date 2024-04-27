@@ -62,4 +62,9 @@ public class Movement2D : MonoBehaviour
         rigid.AddForce(Vector2.up * power, ForceMode2D.Impulse);
         return true;
     }
+    private void OnDrawGizmosSelected()
+    {
+        UnityEditor.Handles.color = Color.green;
+        UnityEditor.Handles.DrawWireDisc(transform.position + groundOffset, Vector3.back, groundRadius);
+    }
 }

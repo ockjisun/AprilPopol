@@ -10,12 +10,14 @@ public class Player : MonoBehaviour
     Animator anim;                      // 애니메이터.
     Vector2 currentInput;               // 현재 입력 값.
     SpriteRenderer spriteRenderer;      // 스프라이트 렌더러.
+    LayerMask enemyMask;                // 에너미 레이어 마스크
 
     void Start()
     {
         anim = GetComponent<Animator>();
         currentInput = Vector2.zero;
-        spriteRenderer = GetComponent<SpriteRenderer>();    
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        enemyMask = 1 << LayerMask.NameToLayer("Enemy");
     }
 
     private void Update()
@@ -29,8 +31,10 @@ public class Player : MonoBehaviour
 
         // 점프 입력키를 눌러 Jump를 호출한다.
         // 점프 가능 여부는 Movement2D가 판단한다.
-        if (Input.GetKeyDown(KeyCode.Space) && movement2D.Jump())
+        if (Input.GetKeyDown(KeyCode.W) && movement2D.Jump())
             anim.SetTrigger("onJump");
+
+        // 발로 적 공격
 
     }
 
