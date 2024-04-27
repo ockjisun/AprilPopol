@@ -29,25 +29,15 @@ public class Player : MonoBehaviour
 
         // 점프 입력키를 눌러 Jump를 호출한다.
         // 점프 가능 여부는 Movement2D가 판단한다.
-        if (Input.GetKeyDown(KeyCode.Z) && movement2D.Jump())
+        if (Input.GetKeyDown(KeyCode.Space) && movement2D.Jump())
             anim.SetTrigger("onJump");
 
-        /*
-        // 발 밑에 적이 충돌할 경우 데미지를 준다.
-        Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, attackRadius, enemyMask);
-        if (enemyCollider != null && movement2D.Veclocity.y < 0)
-        {
-            enemyCollider.GetComponent<Enemy>().Hit();
-            movement2D.Throw(7f);
-        }
-        */
     }
 
     void LateUpdate()
     {
         // 애니메이터의 파라미터 갱신.
         anim.SetBool("isRun", currentInput.x != 0);
-        anim.SetBool("isCrouch", currentInput.y == -1);
         anim.SetBool("isGround", movement2D.IsGrounded);
         anim.SetFloat("velocityY", Mathf.Round(movement2D.Veclocity.y));
 
