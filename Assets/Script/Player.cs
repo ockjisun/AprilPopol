@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : Unit
 {
+    public static Player Instance { get; private set; }
+
+    [SerializeField] Ability grow;
+
     [SerializeField] Movement2D movement2D;
     [SerializeField] float attackRadius;
 
@@ -31,7 +35,7 @@ public class Player : MonoBehaviour
 
         // 점프 입력키를 눌러 Jump를 호출한다.
         // 점프 가능 여부는 Movement2D가 판단한다.
-        if (Input.GetKeyDown(KeyCode.W) && movement2D.Jump())
+        if (Input.GetKeyDown(KeyCode.Q) && movement2D.Jump())
             anim.SetTrigger("onJump");
 
         // 발로 적 공격
@@ -46,5 +50,9 @@ public class Player : MonoBehaviour
         anim.SetFloat("velocityY", Mathf.Round(movement2D.Veclocity.y));
 
         currentInput = Vector2.zero;
+    }
+    protected override Ability GetIncrease()
+    {
+        return grow * GameManager.Instance.gameLevel;
     }
 }
