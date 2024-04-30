@@ -15,6 +15,7 @@ public abstract class Unit : RootBehaviour
     public float speed => ability.speed;    
     public float cooltime => ability.cooltime;
 
+
     protected float hp;       // 체력
     protected int level;      // 레벨.
     protected int exp;        // 경험치.

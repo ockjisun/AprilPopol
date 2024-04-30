@@ -22,6 +22,8 @@ public class Enemy : Unit
 
     float delayTime;
 
+    public float health = 100f;
+
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,7 +31,8 @@ public class Enemy : Unit
         rayHeight = Vector3.up * 0.5f;
         collider2D = GetComponent<CapsuleCollider2D>();
         rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();    
+        anim = GetComponent<Animator>();
+        movement2D = GetComponent<Movement2D>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,10 +98,23 @@ public class Enemy : Unit
             delayTime = cooltime;
         }
     }
+    public void Damage(float damageAmount)
+    {
+        // 데미지만큼 체력을 감소시킵니다.
+        health -= damageAmount;
+
+        // 적의 체력이 0 이하로 떨어졌는지 확인합니다.
+        if (health <= 0)
+        {
+            // 적이 사망한 경우 처리할 작업을 여기에 추가합니다.
+            Dead();
+        }
+    }
     public override void TakeDamage(float power, float knockback = 0)
     {
         base.TakeDamage(power, knockback);
         DownUI.Instance.AppearDamage(damagePivot.position, power);
+        Hit(knockback);    // 데미지를 받을 때마다 Hit 메서드를 호출하여 knockback 적용 
     }
     public virtual void DeadForce()
     {
@@ -123,7 +139,7 @@ public class Enemy : Unit
         rigid.velocity = Vector2.zero;
         anim.SetTrigger("onDead");
         StartCoroutine(IEDead());
-
+        gameObject.SetActive(false);
         // ExpObject exp = ExpObjectPool.Instance.GetRandomExpObject();
         // exp.transform.position = transform.position;
 

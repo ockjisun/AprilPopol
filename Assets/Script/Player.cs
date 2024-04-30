@@ -22,6 +22,7 @@ public class Player : Unit
         currentInput = Vector2.zero;
         spriteRenderer = GetComponent<SpriteRenderer>();
         enemyMask = 1 << LayerMask.NameToLayer("Enemy");
+        movement2D = GetComponent<Movement2D>();
     }
 
     private void Update()
@@ -41,6 +42,28 @@ public class Player : Unit
         // 발로 적 공격
 
     }
+    private void Attack()
+    {
+        
+        bool facingRight = spriteRenderer.flipX == false;                               // 플레이어가 오른쪽을 바라보고 있는지 여부를 확인
+        Vector2 attackDirection = facingRight ? Vector2.right : Vector2.left;           // 레이캐스트를 쏠 방향을 결정
+        Debug.DrawRay(transform.position, attackDirection * attackRadius, Color.red);   // 적을 공격하는 범위를 나타내는 원
+
+        
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, attackRadius, attackDirection, attackRadius, enemyMask);   // attackRadius 범위 내의 적을 찾기
+
+        // 찾은 적들에게 데미지를 가합니다.
+        foreach (RaycastHit2D hit in hits)
+        {
+            // 적에게 데미지를 가하는 코드 작성
+            Enemy enemy = hit.collider.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                // 적에게 데미지를 가하는 함수 호출 (예시로 Damage 함수를 호출)
+                enemy.Damage(grow.power);
+            }
+        }
+    }
 
     void LateUpdate()
     {
@@ -53,6 +76,19 @@ public class Player : Unit
     }
     protected override Ability GetIncrease()
     {
-        return grow * GameManager.Instance.gameLevel;
+        // 공격력(power)을 기준으로 증가시키는 코드
+        float increasedPower = grow.power * GameManager.Instance.gameLevel;
+        float increasedSpeed = grow.speed * GameManager.Instance.gameLevel;
+        float increasedHp = grow.hp * GameManager.Instance.gameLevel;
+
+        // 증가된 값으로 새로운 Ability 객체를 생성하여 반환합니다.
+        return new Ability
+        {
+            hp = increasedHp,
+            power = increasedPower,
+            speed = increasedSpeed,
+            cooltime = grow.cooltime
+        };
     }
 }
+
