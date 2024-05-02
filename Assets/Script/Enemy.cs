@@ -121,17 +121,12 @@ public class Enemy : Unit
         hp = 0;
         Dead();
     }
-    protected override void Hit(float knockback)
+    public void Hit()
     {
-        if (anim != null)
-            anim.SetTrigger("onHit");
-
-        // 뒤로 밀기.
-        if (knockback > 0f)
-        {
-            Vector3 dir = (transform.position - Player.Instance.transform.position).normalized;
-            rigid.velocity = dir * knockback;
-        }
+        collider2D.enabled = false;
+        enabled = false;
+        GetComponent<Animator>().SetTrigger("onDead");
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
     }
     protected override void Dead()
     {

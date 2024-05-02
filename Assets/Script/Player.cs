@@ -40,7 +40,13 @@ public class Player : Unit
             anim.SetTrigger("onJump");
 
         // 발로 적 공격
-
+        LayerMask mask = 1 << LayerMask.NameToLayer("Enemy");
+        Collider2D check = Physics2D.OverlapCircle(transform.position, attackRadius, mask);
+        if (check != null)
+        {
+            check.GetComponent<Enemy>().Hit();
+            movement2D.Throw(6f);
+        }
     }
     private void Attack()
     {
@@ -89,6 +95,12 @@ public class Player : Unit
             speed = increasedSpeed,
             cooltime = grow.cooltime
         };
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        UnityEditor.Handles.DrawWireDisc(transform.position, Vector3.back, attackRadius);
     }
 }
 
