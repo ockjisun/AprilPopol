@@ -28,6 +28,9 @@ public class FollowCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (target == null || limitArea == null)
+            return;
+
         // 카메라 사이즈 계산 
         float camWidth = cam.orthographicSize * cam.aspect;
         float camHeight = cam.orthographicSize;
