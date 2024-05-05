@@ -15,6 +15,7 @@ public class Movement2D : MonoBehaviour
     int jumpCount;
 
     public bool IsGrounded => isGrounded;
+    
     public Vector2 Veclocity => rigid.velocity;
 
     private void Start()
