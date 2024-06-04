@@ -1062,7 +1062,7 @@ MonoBehaviour:
     cooltime: 0
   movement2D: {fileID: 1184702152}
   attackRadius: 0
-  jumpPower: 0
+  jumpPower: 5
   groundRadius: 0
   groundOffset: {x: 0, y: 0, z: 0}
 --- !u!70 &1184702155
