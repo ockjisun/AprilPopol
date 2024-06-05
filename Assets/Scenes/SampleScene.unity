@@ -163,7 +163,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &250521403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,7 +921,7 @@ GameObject:
   - component: {fileID: 1184702155}
   - component: {fileID: 1184702154}
   - component: {fileID: 1184702152}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  jumpPower: 12
+  jumpPower: 15
   groundRadius: 0.1
   groundOffset: {x: 0, y: 0, z: 0}
 --- !u!50 &1184702153
@@ -1062,7 +1062,6 @@ MonoBehaviour:
     cooltime: 0
   movement2D: {fileID: 1184702152}
   attackRadius: 0
-  jumpPower: 5
   groundRadius: 0
   groundOffset: {x: 0, y: 0, z: 0}
 --- !u!70 &1184702155
